@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using WebApi_InMemoryCaching_Sample.Data;
+
 namespace WebApi_InMemoryCaching_Sample
 {
     public class Program
@@ -7,6 +11,11 @@ namespace WebApi_InMemoryCaching_Sample
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                   options.UseSqlServer(
+                       builder.Configuration.GetConnectionString("DefaultConnection"),
+                       b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+
 
             builder.Services.AddControllers();
             // In-MemoryCaching realisation
