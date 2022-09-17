@@ -9,6 +9,8 @@ namespace WebApi_InMemoryCaching_Sample
             // Add services to the container.
 
             builder.Services.AddControllers();
+            // In-MemoryCaching realisation
+            builder.Services.AddMemoryCache();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
