@@ -17,6 +17,11 @@ namespace WebApi_InMemoryCaching_Sample.Controllers
             this.memoryCache = memoryCache;
         }
 
+        /// <summary>
+        /// todo:add comment
+        /// </summary>
+        /// <param name="Key"></param>
+        /// <returns></returns>
         [HttpGet("{Key}")]
         public IActionResult GetCache(string Key)
         {
@@ -26,20 +31,24 @@ namespace WebApi_InMemoryCaching_Sample.Controllers
             return Ok(Value);
         }
 
+        /// <summary>
+        /// todo:add comment
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult SetCache(CacheRequest data)
         {
             var cacheExpiryOptions = new MemoryCacheEntryOptions
             {
-                AbsoluteExpiration = DateTime.Now.AddMinutes(5),
-                Priority = CacheItemPriority.High,
-                SlidingExpiration = TimeSpan.FromMinutes(2),
-                Size = 1024,
+                AbsoluteExpiration = DateTime.Now.AddMinutes(5), // the cache will expire guaranteed in minutes
+                Priority = CacheItemPriority.High,// default - Normal, can be High, Low and Never Remove
+                SlidingExpiration = TimeSpan.FromMinutes(2), // cache expiration in minutes
+                Size = 1024, // limit in megabytes
             };
             memoryCache.Set(data.Key, data.Value, cacheExpiryOptions);
-            
+
             return Ok();
         }
-
     }
 }
